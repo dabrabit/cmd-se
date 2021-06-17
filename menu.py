@@ -1,48 +1,48 @@
-from ExpertSystems import ExpertSystem
 import json
+from ExpertSystems import ExpertSystem
+from tkinter import simpledialog as dialog
+from tkinter import messagebox as msg
+from tkinter import Tk
+
 
 # ======================== FUNCIONES ===========================
+base = {}
+
 def addObjectsToKnowledgeBase(knowledgeBase):
     # Ask for objects
-    print("Ingrese los comandos separados por una coma y sin espacios. (Ej. a,b,c):")
-    objects = input()
-    objects = objects.split(",") # Objects in array
+    objects = dialog.askstring("Crear base de conocimiento",
+                               "Ingrese los comandos separados por una coma y sin espacios. (Ej. a,b,c):")
+    if objects is not None:
+        objects = objects.split(",")  # Objects in array
 
-    print("") # Format
+        # Add attributes to objects
+        for object in objects:
+            if object not in knowledgeBase:
+                # Read attributes
+                attributes = dialog.askstring("Atributos", "Ingrese los atributos para " + object +
+                                          " separados por una coma y sin espacios.\n(Ej. a,b,c):")
 
-    # Add attributes to objects
-    for object in objects:
-        if object not in knowledgeBase:
-            # Read attributes
-            print("Ingrese los atributos para " + object + " separados por una coma y sin espacios.")
-            print("(Ej. a,b,c):")
-            attributes = input()
-            print("") # Format
+                # Read advice
+                advice = dialog.askstring("Recomendacion", "Ingrese la recomendación.\n(Ej. Ver los procesos activos.):")
 
-            # Read advice
-            print("Ingrese la recomendación.")
-            print("(Ej. Ver los procesos activos.):")
-            advice = input()
-            print("") # Format
+                attributes = attributes.split(",")  # Attributes in array
 
-            attributes = attributes.split(",") # Attributes in array
+                knowledgeBase[object] = {'attrs': attributes, 'advice': advice}  # Adding attributes to object
 
-            knowledgeBase[object] = {'attrs': attributes, 'advice': advice} # Adding attributes to object
+            else:
+                msg.showwarning("Objeto existente", "El objeto " + object + " ya existe en la base de conocimientos.")
 
-        else:
-            print("El objeto " + object + " ya existe en la base de conocimientos.")
+        return knowledgeBase
 
-    return knowledgeBase
 
 def consultSE(knowledgeBase):
-    objects = [*knowledgeBase] # Obtains keys from knowledge base (los comandos)
+    objects = [*knowledgeBase]  # Obtains keys from knowledge base (los comandos)
 
-    wasResultFound = False # Found some result flag
-    result = objects[0] # We assume that the result is the first object
-    myES = ExpertSystem(knowledgeBase) # Creating expert system
+    wasResultFound = False  # Found some result flag
+    result = objects[0]  # We assume that the result is the first object
+    myES = ExpertSystem(knowledgeBase)  # Creating expert system
 
-    print("Para encontrar su comando, responda S o N a las siguientes preguntas:")
-    print()
+    msg.showinfo("Para encontrar su comando, responda S o N a las siguientes preguntas:")
 
     # Iterate while there's objects and there isn't a result
     while objects and not wasResultFound:
@@ -66,8 +66,7 @@ def consultSE(knowledgeBase):
             if myES.wasAttributeAskedFor(attr): # If true add a check
                 acceptedAttributes += 1
             else: # If false then ask for it
-                print("Experto: ¿Maneja " + attr + "?")
-                response = input()
+                response = dialog.askstring("Responda S/N", "Experto: ¿Maneja " + attr + "?")
 
                 # Add asked attribute and its value
                 myES.setAskedAttribute(attr, response == "S")
@@ -83,72 +82,46 @@ def consultSE(knowledgeBase):
                 wasResultFound = True
 
     return result if wasResultFound else None
+
+
 # ======================== FUNCIONES ===========================
 
 
-option = 0
-base = {}
-expertSystem = ExpertSystem({})
+def menu(master, option):
+    option = int(option)
+    global base
+    print(base)
+    expertSystem = ExpertSystem({})
 
-while option != "5":
+    """
+        1. Introducir objetos a la BC
+        2. Consultar al SE
+        3. Guardar la BC
+        4. Usar una BC existente
+        5. Salir
+    """
+    print("Opcion " + str(option))
 
-    print("")
-    print("+---------------------------------------------------+")
-    print("| Sistemas Expertos                                 |")
-    print("|===================================================|")
-    print("| Selecciona una opción para continuar...           |")
-    print("|                                                   |")
-    print("| 1. Introducir objetos a la BC                     |")
-    print("| 2. Consultar al SE                                |")
-    print("| 3. Guardar la BC                                  |")
-    print("| 4. Usar una BC existente                          |")
-    print("| 5. Salir                                          |")
-    print("+---------------------------------------------------+")
-    print("")
-
-    option = input()
-
-    if option == "1":
-        print("")
-        # Esta función tiene prints adentro, así que sería bueno que los tomes en cuenta para
-        # la interfaz
+    if option == 1:
         addObjectsToKnowledgeBase(base)
 
-    elif option == "2":
-        print("")
-        # Esta función tiene prints adentro, así que sería bueno que los tomes en cuenta para
-        # la interfaz
-        # resultingObject guarda el resultado si encuentra uno, si no, regresa None
+    elif option == 2:
         resultingObject = consultSE(base)
+        print("Si inicio")
 
-        print("")
+        msg.showinfo("Se ejecuto exitosamente",
+                     "============================================\n"
+                     + "El comando resultante es: " + resultingObject
+                     + "\n============================================")
 
-        if resultingObject != None:
-            print("==============================================")
-            print("El comando resultante es: " + resultingObject)
-            print("==============================================")
-        else:
-            print("==============================================")
-            print("No se encontraron comandos con esa descripción")
-            print("==============================================")
-
-    elif option == "3":
-        print("")
+    elif option == 3:
+        # Base de conocimientos guardada.
         with open('./bases/default.json', 'w') as outfile:
             json.dump(base, outfile)
-        
-        print("Base de conocimientos guardada.")
 
-    elif option == "4":
-        print("")
+    elif option == 4:
+        # Base de conocimientos cargada.
         with open('./bases/default.json', 'r') as selectedBase:
             base = json.load(selectedBase)
-
-        print("Base de conocimientos cargada.")
-
-    elif option == "5":
-        print("")
-    else:
-        # Este no es necesario ponerlo en la GUI
-        print("")
-        print("La opción introducida no es válida")
+        Tk().withdraw()
+        msg.showinfo("Carga exitosa", "Se ha cargado correctamente la base de conocimiento")

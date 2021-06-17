@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox as msg
 import widgetAdapter as interface
-import ExpertSystems as ExS
+import menu as ExpertSystem
 
 
 class App(tk.Frame):
@@ -39,7 +39,7 @@ class App(tk.Frame):
 
     def setWordList(self):
         frameList = ["CREAR BASE\nDE CONOCIMIENTO", "CONSULTAR", "GUARDAR BASE DE\nCONOCIMIENTO",
-                     "CAMBIAR BASE DE\nCONOCIMIENTO"]
+                     "CARGAR BASE DE\nCONOCIMIENTO\nEXISTENTE"]
         return frameList
 
     def setMainFrame(self):
@@ -122,7 +122,7 @@ class App(tk.Frame):
         self.clearFrames()
         self.checkBox.clear()
 
-        print(min(self.radioSelectedOption, 1))
+        print(f"Valor: {min(self.radioSelectedOption, 1)}")
         self.frames[min(self.radioSelectedOption, 1)].pack(fill='both', expand=1)
 
         if self.radioSelectedOption == 0:
@@ -149,25 +149,21 @@ class App(tk.Frame):
         self.beforeBtn.place(x=beforebtnposx, y=450, width=70, height=30)
 
     def createKnowledgeDBFrame(self):
-        self.defaultWidgets("Crear Nueva Base De Conocimientos", -125, 30)
+        ExpertSystem.menu(self.master, 1)
+        self.radioSelectedOption = 0
+        self.setFrame()
 
     def retrieveKnowledgeDB(self):
-        self._interface = interface.widgetAdaper(self.dataFrame, self.wordlist, 2)
-        self.checkBox.append(self._interface.getwidget())
-
-        for i in range(len(self.checkBox[0])):
-            self.CheckOption.append(tk.IntVar())
-            self.checkBox[0][i]["command"] = self.selectedCheckbox
-            self.checkBox[0][i]["variable"] = self.CheckOption[i]
-            self.checkBox[0][i]["font"] = ("arial", 10, "bold")
-            self.checkBox[0][i].place(x=self.rbPosX[i], y=self.rbPosY[i], width=230, height=140)
-
-        self.defaultWidgets("Consultar Base De Conocimientos", -135, 30)
+        ExpertSystem.menu(self.master, 2)
+        self.radioSelectedOption = 0
+        self.setFrame()
 
     def saveKnowledgeDB(self):
-        # Creo que aqui no necesita Frame, guardar directamente
-        self.defaultWidgets("Guardar Base De Conocimientos", -140, 30)
+        ExpertSystem.menu(self.master, 3)
+        self.radioSelectedOption = 0
+        self.setFrame()
 
     def changeKnowledgeDB(self):
-        self.defaultWidgets("Cambiar Base de Conocimiento Existente", -105, 30)
-
+        ExpertSystem.menu(self.master, 4)
+        self.radioSelectedOption = 0
+        self.setFrame()
