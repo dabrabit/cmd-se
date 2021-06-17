@@ -1,0 +1,126 @@
+{
+    "cat": {
+        "attrs": ["archivo", "crear", "contenido", "manipulacion"],
+        "advice": "Mostrar las interrupciones, verificar el uso de memoria, mostrar ficheros swap, mostrar adaptadores de red y estadisticas."
+	},
+    "cd": {
+        "attrs": ["archivo", "directorio", "recorrer", "detalles"],
+        "advice": "Retroceder directorios / Ir al directorio raíz."
+	},
+    "chmod": {
+        "attrs": ["permisos", "usuario", "archivo", "directorio", "recursiva", "grupo"],
+        "advice": "Colocar o cambiar permisos sobre un fichero."
+	},
+    "chown": {
+        "attrs": ["usuario", "grupo", "archivo", "directorio", "enlaces", "recursiva", "propietario"],
+        "advice": "Cambiar el dueño de un fichero."
+	},
+    "cp": {
+        "attrs": ["archivo", "manipulacion", "crear", "contenido", "recursiva", "forzar", "copiar"],
+        "advice": "Copiar uno o más ficheros (De igual forma permite copiar directorios enteros)."
+	},
+    "diff": {
+        "attrs": ["directorio", "archivo", "listar", "contenido", "recursiva", "comprobar"],
+        "advice": "Mostrar diferencias entre archivos linux."
+	},
+    "du": {
+        "attrs": ["sistema", "archivo", "directorio", "espacio", "listar", "tamano"],
+        "advice": "Mostrar el tamano de ficheros y directorios (ordenados por tamano)."
+	},
+    "df": {
+        "attrs": ["sistema", "comprobar", "tamano", "archivo", "espacio", "listar"],
+        "advice": "Mostrar una lista de las particiones montadas."
+	},
+    "find": {
+        "attrs": ["filtrar", "buscar", "archivo", "directorio", "tamano", "permisos", "listar"],
+        "advice": "Buscar un fichero o directorio a partir de la ruta especificada."
+	},
+    "grep": {
+        "attrs": ["buscar", "archivo", "filtrar"],
+        "advice": "Buscar patrones de caracteres en directorios especificados."
+	},
+    "head": {
+        "attrs": ["archivo", "contenido", "inicio"],
+        "advice": "Ver la cantidad de lineas especificadas a partir del principio de un fichero."
+	},
+    "history": {
+        "attrs": ["listar", "sistema", "comando"],
+        "advice": "Mostrar los comandos usados recientemente."
+	},
+    "jobs": {
+        "attrs": ["proceso", "sistema", "listar"],
+        "advice": "Listar procesos ejecutados en primer o segundo plano."
+	},
+    "kill": {
+        "attrs": ["proceso", "sistema", "forzar", "terminar", "listar"],
+        "advice": "Forzar el cierre de un proceso."
+	},
+    "locate": {
+        "attrs": ["buscar", "archivo", "forzar", "listar"],
+        "advice": "Encuentra ficheros con el formato que se le especifique."
+	},
+    "ls": {
+        "attrs": ["archivo", "directorio", "mostrar", "detalles", "permisos", "usuario", "tamano", "listar", "grupo"],
+        "advice": "Ver los ficheros de un directorio."
+	},
+    "man": {
+        "attrs": ["informacion", "comando", "detalles"],
+        "advice": "Mostrar las paginas del manual de un comando."
+	},
+    "mkdir": {
+        "attrs": ["directorio", "crear", "permisos", "usuario"],
+        "advice": "Crear una carpeta o directorio con el nombre especificado"
+	},
+    "mv": {
+        "attrs": ["archivo", "directorio", "forzar", "copiar", "crear"],
+        "advice": "Renombrar o mover un fichero de una localización a otra (Incluso en la misma localización)."
+	},
+    "ping": {
+        "attrs": ["enlaces", "sistema", "internet", "puerto"],
+        "advice": "Administrar el estado de conectividad de red entre una fuente y un dispositivo."
+	},
+    "pwd": {
+        "attrs": ["directorio", "usuario", "listar"],
+        "advice": "Mostrar el camino de directorio de trabajo."
+	},
+    "rm": {
+        "attrs": ["archivo", "directorio", "recursiva", "detalles", "forzar", "eliminar"],
+        "advice": "Borrar un fichero o carpeta"
+	},
+    "rmdir": {
+        "attrs": ["directorio", "eliminar", "recursiva", "archivo"],
+        "advice": "Borrar una o más carpetas."
+	},
+    "tail": {
+        "attrs": ["archivo", "contenido", "final"],
+        "advice": "Ver la cantidad de lineas especificadas desde el final de un fichero."
+	},
+    "tar": {
+        "attrs": ["crear", "archivo", "compresion", "directorio", "espacio", "tamano"],
+        "advice": "Crear y extraer archivos comprimidos en formato tar."
+	},    
+    "top": {
+        "attrs": ["proceso", "sistema", "espacio", "listar"],
+        "advice": "Mostrar las tareas de Linux usando la mayoria CPU."
+	},
+    "touch": {
+        "attrs": ["archivo", "crear", "tiempo", "detalles", "forzar"],
+        "advice": "Modificar el tiempo real (tiempo de creación) de un fichero o directorio."
+	},
+    "uname": {
+        "attrs": ["información", "equipo", "sistema operativo"],
+        "advice": "Mostrar la arquitectura de la máquina y versión del Kernel usado."
+    },
+    "unzip": {
+        "attrs": ["archivo", "directorio", "descompresion", "eliminar", "contenido"],
+        "advice": "Descomprimir un archivo zip."
+	},
+    "wget": {
+        "attrs": ["archivo", "contenido", "internet", "descargar", "directorio"],
+        "advice": "Descargar una pagina o un fichero dentro de una pagina."
+	},
+    "zip": {
+        "attrs": ["archivo", "directorio", "compresion", "eliminar", "contenido"],
+        "advice": "Crear un fichero comprimido o comprimir uno o más ficheros."
+	}
+}
