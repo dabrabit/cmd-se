@@ -53,7 +53,7 @@ def consultSE(knowledgeBase):
             continue
 
         rejectedAttributeFound = False
-        currentObjectAttributes = myES.getObjectAttributes(currentObject)
+        currentObjectAttributes = myES.getObjectAttributes(currentObject).copy()
         numberOfAttributesInObject = len(currentObjectAttributes)
         acceptedAttributes = 0
 
