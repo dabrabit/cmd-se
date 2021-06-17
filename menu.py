@@ -127,6 +127,20 @@ while option != "5":
             print("==============================================")
             print("El comando resultante es: " + resultingObject)
             print("==============================================")
+            
+            print("")
+            print("==============================================")
+            print("La lista de atributos del comando son:")
+            print("==============================================")
+            for el in base[resultingObject]['attrs']:
+                print(el)
+            print("==============================================")
+                
+            print("")
+            print("==============================================")
+            print("La funcionalidad del comando es la siguiente:")
+            print(base[resultingObject]['advice'])
+            print("==============================================")
         else:
             print("==============================================")
             print("No se encontraron comandos con esa descripción")
@@ -137,18 +151,24 @@ while option != "5":
         with open('./bases/default.json', 'w') as outfile:
             json.dump(base, outfile)
         
+        print("==============================================")
         print("Base de conocimientos guardada.")
+        print("==============================================")
 
     elif option == "4":
         print("")
         with open('./bases/default.json', 'r') as selectedBase:
             base = json.load(selectedBase)
 
+        print("==============================================")
         print("Base de conocimientos cargada.")
+        print("==============================================")
 
     elif option == "5":
         print("")
     else:
         # Este no es necesario ponerlo en la GUI
         print("")
+        print("==============================================")
         print("La opción introducida no es válida")
+        print("==============================================")
