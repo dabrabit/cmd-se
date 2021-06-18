@@ -136,25 +136,17 @@ class App(tk.Frame):
         elif self.radioSelectedOption == 4:
             self.changeKnowledgeDB()
 
-    def defaultWidgets(self, headertxt, headertxtposx, beforebtnposx):
-        self.headerLbl = tk.Label(self.dataFrame, text=headertxt, font=("Arial", 12),
-                                  bg="#FEFEFE")
-        self.nextBtn = tk.Button(self.dataFrame, text="Siguiente", fg="white", bg="#1877F2", font=("arial", 10, "bold"),
-                                 cursor="hand2", command=self.onClickNext)
-        self.beforeBtn = tk.Button(self.dataFrame, text="Anterior", bg="#FEFEFE",
-                                   font=("arial", 10), cursor="hand2", command=self.onClickBefore)
-
-        self.headerLbl.place(x=headertxtposx, y=20, width=550, height=50)
-        self.nextBtn.place(x=450, y=450, width=70, height=30)
-        self.beforeBtn.place(x=beforebtnposx, y=450, width=70, height=30)
-
     def createKnowledgeDBFrame(self):
         ExpertSystem.menu(self.master, 1)
         self.radioSelectedOption = 0
         self.setFrame()
 
     def retrieveKnowledgeDB(self):
-        ExpertSystem.menu(self.master, 2)
+        if ExpertSystem.retriveKnowledgeBaseState():
+            ExpertSystem.menu(self.master, 2)
+        else:
+            ExpertSystem.menu(self.master, 4)
+            ExpertSystem.menu(self.master, 2)
         self.radioSelectedOption = 0
         self.setFrame()
 

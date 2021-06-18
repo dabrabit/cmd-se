@@ -7,6 +7,7 @@ from tkinter import Tk
 
 # ======================== FUNCIONES ===========================
 base = {}
+status = False
 
 def addObjectsToKnowledgeBase(knowledgeBase):
     # Ask for objects
@@ -42,7 +43,7 @@ def consultSE(knowledgeBase):
     result = objects[0]  # We assume that the result is the first object
     myES = ExpertSystem(knowledgeBase)  # Creating expert system
 
-    msg.showinfo("Para encontrar su comando, responda S o N a las siguientes preguntas:")
+    msg.showinfo("Consultar", "Para encontrar su comando, responda S o N a las siguientes preguntas:")
 
     # Iterate while there's objects and there isn't a result
     while objects and not wasResultFound:
@@ -66,7 +67,7 @@ def consultSE(knowledgeBase):
             if myES.wasAttributeAskedFor(attr): # If true add a check
                 acceptedAttributes += 1
             else: # If false then ask for it
-                response = dialog.askstring("Responda S/N", "Experto: ¿Maneja " + attr + "?")
+                response = dialog.askstring("Responda S/N", "Experto: ¿Maneja " + attr + "?").upper()
 
                 # Add asked attribute and its value
                 myES.setAskedAttribute(attr, response == "S")
@@ -86,11 +87,13 @@ def consultSE(knowledgeBase):
 
 # ======================== FUNCIONES ===========================
 
+def retriveKnowledgeBaseState():
+    return status
 
 def menu(master, option):
     option = int(option)
     global base
-    print(base)
+    global status
     expertSystem = ExpertSystem({})
 
     """
@@ -100,24 +103,42 @@ def menu(master, option):
         4. Usar una BC existente
         5. Salir
     """
-    print("Opcion " + str(option))
 
     if option == 1:
         addObjectsToKnowledgeBase(base)
+        status = True
+
 
     elif option == 2:
         resultingObject = consultSE(base)
-        print("Si inicio")
+        status = True
 
         msg.showinfo("Se ejecuto exitosamente",
-                     "============================================\n"
+                     "=======================================\n"
                      + "El comando resultante es: " + resultingObject
-                     + "\n============================================")
+                     + "\n=======================================")
+        tmp = ""
+        for el in base[resultingObject]['attrs']:
+            tmp += el + "\n"
+        msg.showinfo("Se ejecuto exitosamente",
+                     "=======================================\n"
+                     + "La lista de atributos del comando son:\n"
+                     + tmp
+                     + "\n=======================================")
+        msg.showinfo("Se ejecuto exitosamente",
+                     "=======================================\n"
+                     + "La funcionalidad del comando es la siguiente:\n"
+                     + base[resultingObject]['advice']
+                     + "\n=======================================")
 
     elif option == 3:
         # Base de conocimientos guardada.
         with open('./bases/default.json', 'w') as outfile:
             json.dump(base, outfile)
+        msg.showinfo("Guardado correcto",
+                     "=======================================\n"
+                     + "Base de conocimientos guardada correctamente."
+                     + "\n=======================================")
 
     elif option == 4:
         # Base de conocimientos cargada.
