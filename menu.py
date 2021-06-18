@@ -113,23 +113,29 @@ def menu(master, option):
         resultingObject = consultSE(base)
         status = True
 
-        msg.showinfo("Se ejecuto exitosamente",
-                     "=======================================\n"
-                     + "El comando resultante es: " + resultingObject
-                     + "\n=======================================")
-        tmp = ""
-        for el in base[resultingObject]['attrs']:
-            tmp += el + "\n"
-        msg.showinfo("Se ejecuto exitosamente",
-                     "=======================================\n"
-                     + "La lista de atributos del comando son:\n"
-                     + tmp
-                     + "\n=======================================")
-        msg.showinfo("Se ejecuto exitosamente",
-                     "=======================================\n"
-                     + "La funcionalidad del comando es la siguiente:\n"
-                     + base[resultingObject]['advice']
-                     + "\n=======================================")
+        if resultingObject is not None:
+            msg.showinfo("Se ejecuto exitosamente",
+                        "=======================================\n"
+                        + "El comando resultante es: " + resultingObject
+                        + "\n=======================================")
+            tmp = ""
+            for el in base[resultingObject]['attrs']:
+                tmp += el + "\n"
+            msg.showinfo("Se ejecuto exitosamente",
+                        "=======================================\n"
+                        + "La lista de atributos del comando son:\n"
+                        + tmp
+                        + "\n=======================================")
+            msg.showinfo("Se ejecuto exitosamente",
+                        "=======================================\n"
+                        + "La funcionalidad del comando es la siguiente:\n"
+                        + base[resultingObject]['advice']
+                        + "\n=======================================")
+        else:
+            msg.showerror("Objeto no encontrado",
+                          "=======================================\n"
+                          + "No se encontró el comando dado que uno de sus atributos no fue válido."
+                          + "\n=======================================")
 
     elif option == 3:
         # Base de conocimientos guardada.
