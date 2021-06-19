@@ -185,6 +185,7 @@ def menu(master, option):
             filename = asksaveasfile(initialdir=directory() + "\\bases\\", filetypes=files, defaultextension=files)
             if filename is None:
                 msg.showwarning("No se guardaron los cambios", "Se canceló el guardado.")
+                filename = './bases/default.json'
             else:
                 newBase = False
                 filename = filename.name
