@@ -2,4 +2,4 @@
 
 ###### Require python 3.x
 
-**Run _main.py_**
+**Run from cli: python _main.py_**
