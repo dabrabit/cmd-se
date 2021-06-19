@@ -38,7 +38,7 @@ class App(tk.Frame):
         self.pack()
 
     def setWordList(self):
-        frameList = ["CREAR BASE\nDE CONOCIMIENTO", "CONSULTAR", "GUARDAR BASE DE\nCONOCIMIENTO",
+        frameList = ["INTRODUCIR OBJETOS\nA LA BC", "CONSULTAR", "GUARDAR BASE DE\nCONOCIMIENTO",
                      "CARGAR BASE DE\nCONOCIMIENTO\nEXISTENTE"]
         return frameList
 
@@ -50,7 +50,7 @@ class App(tk.Frame):
         self.grid()
         self.headerLbl = tk.Label(self.mainFrame, text="Seleccione una opción", font=("Arial", 12), bg="#FEFEFE")
 
-        self.headerLbl.place(x=-25, y=20, width=200, height=50)
+        self.headerLbl.place(x=10, y=20, width=200, height=50)
         for i in range(len(self.rb[0])):
             self.rb[0][i]["command"] = self.selectedRadioButton
             self.rb[0][i]["variable"] = self.RadioOption
@@ -122,7 +122,6 @@ class App(tk.Frame):
         self.clearFrames()
         self.checkBox.clear()
 
-        print(f"Valor: {min(self.radioSelectedOption, 1)}")
         self.frames[min(self.radioSelectedOption, 1)].pack(fill='both', expand=1)
 
         if self.radioSelectedOption == 0:
@@ -142,11 +141,7 @@ class App(tk.Frame):
         self.setFrame()
 
     def retrieveKnowledgeDB(self):
-        if ExpertSystem.retriveKnowledgeBaseState():
-            ExpertSystem.menu(self.master, 2)
-        else:
-            ExpertSystem.menu(self.master, 4)
-            ExpertSystem.menu(self.master, 2)
+        ExpertSystem.menu(self.master, 2)
         self.radioSelectedOption = 0
         self.setFrame()
 
