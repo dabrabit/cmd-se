@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox as msg
 import widgetAdapter as interface
-import ExpertSystems as ExS
+import menu as ExpertSystem
 
 
 class App(tk.Frame):
@@ -38,8 +38,8 @@ class App(tk.Frame):
         self.pack()
 
     def setWordList(self):
-        frameList = ["CREAR BASE\nDE CONOCIMIENTO", "CONSULTAR", "GUARDAR BASE DE\nCONOCIMIENTO",
-                     "CAMBIAR BASE DE\nCONOCIMIENTO"]
+        frameList = ["INTRODUCIR OBJETOS\nA LA BC", "CONSULTAR", "GUARDAR BASE DE\nCONOCIMIENTO",
+                     "CARGAR BASE DE\nCONOCIMIENTO\nEXISTENTE"]
         return frameList
 
     def setMainFrame(self):
@@ -50,7 +50,7 @@ class App(tk.Frame):
         self.grid()
         self.headerLbl = tk.Label(self.mainFrame, text="Seleccione una opción", font=("Arial", 12), bg="#FEFEFE")
 
-        self.headerLbl.place(x=-25, y=20, width=200, height=50)
+        self.headerLbl.place(x=10, y=20, width=200, height=50)
         for i in range(len(self.rb[0])):
             self.rb[0][i]["command"] = self.selectedRadioButton
             self.rb[0][i]["variable"] = self.RadioOption
@@ -122,7 +122,6 @@ class App(tk.Frame):
         self.clearFrames()
         self.checkBox.clear()
 
-        print(min(self.radioSelectedOption, 1))
         self.frames[min(self.radioSelectedOption, 1)].pack(fill='both', expand=1)
 
         if self.radioSelectedOption == 0:
@@ -136,38 +135,22 @@ class App(tk.Frame):
         elif self.radioSelectedOption == 4:
             self.changeKnowledgeDB()
 
-    def defaultWidgets(self, headertxt, headertxtposx, beforebtnposx):
-        self.headerLbl = tk.Label(self.dataFrame, text=headertxt, font=("Arial", 12),
-                                  bg="#FEFEFE")
-        self.nextBtn = tk.Button(self.dataFrame, text="Siguiente", fg="white", bg="#1877F2", font=("arial", 10, "bold"),
-                                 cursor="hand2", command=self.onClickNext)
-        self.beforeBtn = tk.Button(self.dataFrame, text="Anterior", bg="#FEFEFE",
-                                   font=("arial", 10), cursor="hand2", command=self.onClickBefore)
-
-        self.headerLbl.place(x=headertxtposx, y=20, width=550, height=50)
-        self.nextBtn.place(x=450, y=450, width=70, height=30)
-        self.beforeBtn.place(x=beforebtnposx, y=450, width=70, height=30)
-
     def createKnowledgeDBFrame(self):
-        self.defaultWidgets("Crear Nueva Base De Conocimientos", -125, 30)
+        ExpertSystem.menu(self.master, 1)
+        self.radioSelectedOption = 0
+        self.setFrame()
 
     def retrieveKnowledgeDB(self):
-        self._interface = interface.widgetAdaper(self.dataFrame, self.wordlist, 2)
-        self.checkBox.append(self._interface.getwidget())
-
-        for i in range(len(self.checkBox[0])):
-            self.CheckOption.append(tk.IntVar())
-            self.checkBox[0][i]["command"] = self.selectedCheckbox
-            self.checkBox[0][i]["variable"] = self.CheckOption[i]
-            self.checkBox[0][i]["font"] = ("arial", 10, "bold")
-            self.checkBox[0][i].place(x=self.rbPosX[i], y=self.rbPosY[i], width=230, height=140)
-
-        self.defaultWidgets("Consultar Base De Conocimientos", -135, 30)
+        ExpertSystem.menu(self.master, 2)
+        self.radioSelectedOption = 0
+        self.setFrame()
 
     def saveKnowledgeDB(self):
-        # Creo que aqui no necesita Frame, guardar directamente
-        self.defaultWidgets("Guardar Base De Conocimientos", -140, 30)
+        ExpertSystem.menu(self.master, 3)
+        self.radioSelectedOption = 0
+        self.setFrame()
 
     def changeKnowledgeDB(self):
-        self.defaultWidgets("Cambiar Base de Conocimiento Existente", -105, 30)
-
+        ExpertSystem.menu(self.master, 4)
+        self.radioSelectedOption = 0
+        self.setFrame()
