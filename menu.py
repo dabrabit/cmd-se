@@ -5,7 +5,6 @@ from tkinter import messagebox as msg
 from tkinter import simpledialog as dialog
 from tkinter.filedialog import askopenfilename
 from tkinter.filedialog import asksaveasfile
-
 from ExpertSystems import ExpertSystem
 
 # ======================== FUNCIONES ===========================
@@ -13,6 +12,7 @@ base = {}
 status = False
 newBase = False
 filename = './bases/default.json'
+files = [('JSON File', '*.json')]
 rejectedAtributeName = []
 rejectedAtributeCount = 0
 
@@ -49,6 +49,7 @@ def consultSE(knowledgeBase):
     if len(knowledgeBase) == 0:
         msg.showerror("Base de conocimientos vacia", "La base de conocimientos no contiene ningun dato.")
         return
+
     global rejectedAtributeName, rejectedAtributeCount
     rejectedAtributeName.clear()
     objects = [*knowledgeBase]  # Obtains keys from knowledge base (los comandos)
@@ -119,16 +120,9 @@ def retriveKnowledgeBaseState():
 def menu(master, option):
     option = int(option)
     global base, status, newBase, filename, rejectedAtributeName, rejectedAtributeCount
+    global files
 
     expertSystem = ExpertSystem({})
-
-    """
-        1. Introducir objetos a la BC
-        2. Consultar al SE
-        3. Guardar la BC
-        4. Usar una BC existente
-        5. Salir
-    """
 
     if option == 1:
         # Introducir objetos a la BC
@@ -155,33 +149,33 @@ def menu(master, option):
 
         if resultingObject is not None:
             msg.showinfo("Se ejecuto exitosamente",
-                         "=======================================\n"
+                         "="*39 + "\n"
                          + f"El comando resultante es: {resultingObject}"
-                         + "\n=======================================")
+                         + "\n" + "="*39)
             tmp = ""
             for el in base[resultingObject]['attrs']:
                 tmp += "\t*" + el + "\n"
+
             msg.showinfo("Se ejecuto exitosamente",
-                         "=======================================\n"
+                         "="*39 + "\n"
                          + f"La lista de atributos del comando son:\n{tmp}"
-                         + "\n=======================================")
+                         + "\n" + "="*39)
             msg.showinfo("Se ejecuto exitosamente",
-                         "=======================================\n"
-                         + f"La funcionalidad del comando es la siguiente:\n{base[resultingObject]['advice']}"
-                         + "\n=======================================")
+                         "="*39 + "\n"
+                         + f"La funcionalidad del comando es la siguiente:\n\n{base[resultingObject]['advice']}"
+                         + "\n" + "="*39)
         else:
             rejectedAtributeName = list(set(rejectedAtributeName))
             msg.showerror("Objeto no encontrado",
-                          "=======================================\n"
+                          "="*39 + "\n"
                           + f"No se encontró el comando dado que"
                           + format(''.join(rejectedAtributeName))
                           + "\nno " + f"{'fue válido' if rejectedAtributeCount == 0 else 'fueron válidos'}."
-                          + "\n=======================================")
+                          + "\n" + "="*39)
 
     elif option == 3:
         # Guardar base de conocimientos.
         if status is not True or newBase:
-            files = [('JSON File', '*.json')]
             filename = asksaveasfile(initialdir=directory() + "\\bases\\", filetypes=files, defaultextension=files)
             if filename is None:
                 msg.showwarning("No se guardaron los cambios", "Se canceló el guardado.")
@@ -189,16 +183,17 @@ def menu(master, option):
             else:
                 newBase = False
                 filename = filename.name
+
                 with open(filename, 'w') as outfile:
                     json.dump(base, outfile)
                 msg.showinfo("Guardado correcto",
-                             "=======================================\n"
+                             "="*39 + "\n"
                              + "Base de conocimientos guardada correctamente."
-                             + "\n=======================================")
+                             + "\n" + "="*39)
 
     elif option == 4:
         # Cargar base de conocimientos.
-        filename = askopenfilename()
+        filename = askopenfilename(filetypes=files, defaultextension=files)
 
         Tk().withdraw()
         if len(filename) > 0:
