@@ -24,7 +24,7 @@ class App(tk.Frame):
         self.nextBtn = None
         self.beforeBtn = None
         self.quitBtn = tk.Button(self.mainFrame, text="Salir", bg="white", fg="red",
-                                 command=self.master.destroy, cursor="hand2")
+                                 command=self.master.quit, cursor="hand2")
 
         self.rbPosX = [30, 290, 30, 290]
         self.rbPosY = [90, 90, 270, 270]

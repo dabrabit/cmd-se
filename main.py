@@ -19,3 +19,4 @@ if __name__ == '__main__':
     root.title("Buscador de comandos para Linux")
     app = getScreenResolution(root)
     app.mainloop()
+    app.destroy()
