@@ -126,18 +126,20 @@ def menu(master, option):
 
     if option == 1:
         # Introducir objetos a la BC
-        if status is not True:
+        if not status:
             question = msg.askyesno("Base de datos no cargada", "No has cargado ninguna base de conocimientos aún,"
                                                                 " todos los datos introducidos se irán a una nueva base"
                                                                 " de conocimientos, ¿Desea continuar?")
             if question:
-                base = addObjectsToKnowledgeBase(base)
                 status = True
                 newBase = True
+            else:
+                return
+        base = addObjectsToKnowledgeBase(base)
 
     elif option == 2:
         # Consultar base de conocimientos.
-        if status is not True:
+        if not status:
             with open(filename, 'r') as selectedBase:
                 base = json.load(selectedBase)
             msg.showwarning("Base de datos por defecto cargada",
@@ -149,33 +151,33 @@ def menu(master, option):
 
         if resultingObject is not None:
             msg.showinfo("Se ejecuto exitosamente",
-                         "="*39 + "\n"
+                         "=======================================\n"
                          + f"El comando resultante es: {resultingObject}"
-                         + "\n" + "="*39)
+                         + "\n=======================================")
             tmp = ""
             for el in base[resultingObject]['attrs']:
                 tmp += "\t*" + el + "\n"
 
             msg.showinfo("Se ejecuto exitosamente",
-                         "="*39 + "\n"
+                         "=======================================\n"
                          + f"La lista de atributos del comando son:\n{tmp}"
-                         + "\n" + "="*39)
+                         + "=======================================")
             msg.showinfo("Se ejecuto exitosamente",
-                         "="*39 + "\n"
+                         "=======================================\n"
                          + f"La funcionalidad del comando es la siguiente:\n\n{base[resultingObject]['advice']}"
-                         + "\n" + "="*39)
+                         + "\n=======================================")
         else:
             rejectedAtributeName = list(set(rejectedAtributeName))
             msg.showerror("Objeto no encontrado",
-                          "="*39 + "\n"
+                          "=======================================\n"
                           + f"No se encontró el comando dado que"
                           + format(''.join(rejectedAtributeName))
                           + "\nno " + f"{'fue válido' if rejectedAtributeCount == 0 else 'fueron válidos'}."
-                          + "\n" + "="*39)
+                          + "\n=======================================")
 
     elif option == 3:
         # Guardar base de conocimientos.
-        if status is not True or newBase:
+        if status or newBase:
             filename = asksaveasfile(initialdir=directory() + "\\bases\\", filetypes=files, defaultextension=files)
             if filename is None:
                 msg.showwarning("No se guardaron los cambios", "Se canceló el guardado.")
@@ -187,9 +189,11 @@ def menu(master, option):
                 with open(filename, 'w') as outfile:
                     json.dump(base, outfile)
                 msg.showinfo("Guardado correcto",
-                             "="*39 + "\n"
+                             "=======================================\n"
                              + "Base de conocimientos guardada correctamente."
-                             + "\n" + "="*39)
+                             + "\n=======================================")
+        else:
+            msg.showerror("Base de datos no cargada", "No has cargado ninguna base de conocimientos.")
 
     elif option == 4:
         # Cargar base de conocimientos.
